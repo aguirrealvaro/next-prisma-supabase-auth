@@ -15,7 +15,7 @@ export async function POST() {
   }
 
   const newProduct = await prisma.product.create({
-    data: { profileId: session?.user.id, name: "banana", price: 200 },
+    data: { profileId: session.user.id, name: "banana", price: 200 },
   });
 
   return NextResponse.json(newProduct);
