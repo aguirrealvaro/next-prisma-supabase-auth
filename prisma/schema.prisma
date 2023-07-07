@@ -10,6 +10,7 @@ datasource db {
 }
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model users {
   instance_id                 String?       @db.Uuid
   id                          String        @id @db.Uuid
@@ -55,9 +56,10 @@ model users {
 }
 
 model Profile {
-  id    String @id(map: "profile_pkey") @db.Uuid
-  email String
-  users users  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id      String    @id(map: "profile_pkey") @db.Uuid
+  email   String
+  users   users     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  products Product[]
 
   @@schema("public")
 }
@@ -68,6 +70,8 @@ model Product {
   updatedAt DateTime @updatedAt
   name      String
   price     Int
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  profileId String   @db.Uuid
 
   @@schema("public")
 }
@@ -246,6 +250,7 @@ model sessions {
 }
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model sso_domains {
   id              String        @id @db.Uuid
   sso_provider_id String        @db.Uuid
@@ -258,6 +263,7 @@ model sso_domains {
   @@schema("auth")
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model sso_providers {
   id                String              @id @db.Uuid

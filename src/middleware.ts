@@ -14,9 +14,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.json("Not auth", { status: 400 });
   }
 
+  // TO DO: append session.user.id to request
   NextResponse.next();
 }
 
 export const config = {
-  matcher: "/api/products/:path*",
+  matcher: ["/api/product/:path*", "/api/products/:path*"],
 };
