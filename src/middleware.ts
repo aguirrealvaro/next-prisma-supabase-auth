@@ -13,6 +13,8 @@ export async function middleware(req: NextRequest) {
   if (!session) {
     return NextResponse.json("Not auth", { status: 400 });
   }
+
+  NextResponse.next();
 }
 
 export const config = {
