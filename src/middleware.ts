@@ -14,8 +14,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.json("Not auth", { status: 400 });
   }
 
-  // TO DO: append session.user.id to request
-  NextResponse.next();
+  const response = NextResponse.next();
+  response.cookies.set("userId", session.user.id);
+
+  return response;
 }
 
 export const config = {

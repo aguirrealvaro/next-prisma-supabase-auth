@@ -1,9 +1,17 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/prisma";
 
-export async function POST() {
+type BodyType = {
+  name: string;
+  price: number;
+};
+
+export async function POST(request: NextRequest) {
+  const { name, price }: BodyType = await request.json();
+  const userId = request.cookies.get("userId")?.value || "";
+
   const supabase = createRouteHandlerClient({ cookies });
 
   const {
@@ -15,7 +23,7 @@ export async function POST() {
   }
 
   const newProduct = await prisma.product.create({
-    data: { profileId: session.user.id, name: "banana", price: 200 },
+    data: { profileId: userId, name, price },
   });
 
   return NextResponse.json(newProduct);
