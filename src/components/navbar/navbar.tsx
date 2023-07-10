@@ -5,7 +5,7 @@ const Navbar: FunctionComponent = () => {
   return (
     <header className="m-4">
       <nav>
-        <ul className="flex gap-4">
+        <ul className="flex justify-center gap-4">
           <li>
             <Link href="/login" className="text-blue-600 hover:underline">
               Login

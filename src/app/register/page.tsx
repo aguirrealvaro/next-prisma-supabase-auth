@@ -28,6 +28,7 @@ export const Register: FunctionComponent = () => {
 
   return (
     <div>
+      <h2 className="mb-4 font-bold">Register</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label htmlFor="email">Email: </label>
@@ -59,9 +60,7 @@ export const Register: FunctionComponent = () => {
         </button>
       </form>
       {signUpMutation.isSuccess && <span>Email has been sent</span>}
-      {signUpMutation.isError && (
-        <span className="text-red-500">{signUpMutation.error as any}</span>
-      )}
+      {signUpMutation.isError && <span className="text-red-500">Error</span>}
     </div>
   );
 };

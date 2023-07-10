@@ -8,7 +8,7 @@ export const signUpUser = (body: SignCredentialsType): Promise<User> => {
   });
 };
 
-export const signIpUser = (body: SignCredentialsType): Promise<User> => {
+export const signInUser = (body: SignCredentialsType): Promise<User> => {
   return fetcher("auth/login", {
     method: "POST",
     body: JSON.stringify(body),
