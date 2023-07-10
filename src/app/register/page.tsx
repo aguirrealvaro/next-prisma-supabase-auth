@@ -13,9 +13,14 @@ export const Register: FunctionComponent = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Fields>({ defaultValues: { email: "", password: "" } });
 
-  const signUpMutation = useMutation(signUpUser);
+  const signUpMutation = useMutation(signUpUser, {
+    onSuccess: () => {
+      reset();
+    },
+  });
 
   const onSubmit: SubmitHandler<SignCredentialsType> = (data) => {
     signUpMutation.mutate(data);
@@ -31,8 +36,9 @@ export const Register: FunctionComponent = () => {
             id="email"
             {...register("email", {
               required: { value: true, message: "Required field" },
+              pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email" },
             })}
-            className="rounded border border-neutral-600 px-2"
+            className="rounded border border-neutral-400 px-2"
           />
           {errors.email && <span className="text-red-500">{errors.email.message}</span>}
         </div>
@@ -43,16 +49,19 @@ export const Register: FunctionComponent = () => {
             id="password"
             {...register("password", {
               required: { value: true, message: "Required field" },
-              pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email" },
             })}
-            className="rounded border border-neutral-600 px-2"
+            className="rounded border border-neutral-400 px-2"
           />
-          {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+          {errors.password && <span className="text-red-500">{errors.password.message}</span>}
         </div>
         <button type="submit" className="rounded bg-blue-600 p-2 text-white">
           {signUpMutation.isLoading ? "Loading..." : "Sign up"}
         </button>
       </form>
+      {signUpMutation.isSuccess && <span>Email has been sent</span>}
+      {signUpMutation.isError && (
+        <span className="text-red-500">{signUpMutation.error as any}</span>
+      )}
     </div>
   );
 };

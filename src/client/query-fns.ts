@@ -7,3 +7,10 @@ export const signUpUser = (body: SignCredentialsType): Promise<User> => {
     body: JSON.stringify(body),
   });
 };
+
+export const signIpUser = (body: SignCredentialsType): Promise<User> => {
+  return fetcher("auth/login", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+};
