@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Navbar: FunctionComponent = () => {
   return (
-    <header className="mb-4">
+    <header className="m-4">
       <nav>
         <ul className="flex gap-4">
           <li>

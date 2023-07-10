@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { FunctionComponent, ReactNode } from "react";
 import { Metadata } from "next";
 import { Navbar, Wrapper } from "@/components";
+import { QueryProvider } from "@/providers";
 import { cn } from "@/utils/cn";
 import { inter } from "@/utils/fonts";
 
@@ -22,12 +23,14 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           `${inter.variable} font-body`
         )}
       >
-        <div className="flex h-screen flex-col">
-          <Wrapper>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-          </Wrapper>
-        </div>
+        <QueryProvider>
+          <div className="flex h-screen flex-col">
+            <Wrapper>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+            </Wrapper>
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );
