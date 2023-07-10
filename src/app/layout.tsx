@@ -1,13 +1,12 @@
 import "@/styles/globals.css";
 import { FunctionComponent, ReactNode } from "react";
 import { Metadata } from "next";
-import { ThemeProvider } from "@/providers";
+import { Navbar, Wrapper } from "@/components";
 import { cn } from "@/utils/cn";
 import { inter } from "@/utils/fonts";
 
 export const metadata: Metadata = {
-  title: "Next Tailwind Template",
-  description: "Description",
+  title: "Prisma with Supabase Auth",
 };
 
 type RootLayoutProps = {
@@ -23,13 +22,12 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           `${inter.variable} font-body`
         )}
       >
-        <ThemeProvider>
-          <div className="flex h-screen flex-col">
-            <header>Header</header>
+        <div className="flex h-screen flex-col">
+          <Wrapper>
+            <Navbar />
             <main className="flex-1">{children}</main>
-            <footer>Footer</footer>
-          </div>
-        </ThemeProvider>
+          </Wrapper>
+        </div>
       </body>
     </html>
   );

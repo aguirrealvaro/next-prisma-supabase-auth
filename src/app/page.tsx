@@ -1,12 +1,7 @@
-"use client";
+import { FunctionComponent } from "react";
 
-import { ThemeToggle } from "@/components";
+export const Home: FunctionComponent = () => {
+  return <div>Page</div>;
+};
 
-export default function Home() {
-  return (
-    <div>
-      <h1>Next Tailwind Template</h1>
-      <ThemeToggle />
-    </div>
-  );
-}
+export default Home;
