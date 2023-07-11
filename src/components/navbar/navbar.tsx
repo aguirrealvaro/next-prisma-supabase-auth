@@ -1,14 +1,14 @@
 "use client";
 
 import { FunctionComponent } from "react";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logOutSession } from "@/client/query-fns";
 import { useSession } from "@/hooks";
 
 const Navbar: FunctionComponent = () => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { isAuth } = useSession();
 
