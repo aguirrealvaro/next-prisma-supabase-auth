@@ -2,11 +2,14 @@
 
 import { FunctionComponent } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SignCredentialsType } from "@/client/interfaces";
 import { signInUser } from "@/client/query-fns";
 
 export const Login: FunctionComponent = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -17,6 +20,7 @@ export const Login: FunctionComponent = () => {
   const signInMutation = useMutation(signInUser, {
     onSuccess: () => {
       reset();
+      router.push("/");
     },
   });
 
