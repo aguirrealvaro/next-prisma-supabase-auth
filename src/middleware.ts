@@ -21,6 +21,17 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
+  if (
+    req.nextUrl.pathname.startsWith("/register") ||
+    req.nextUrl.pathname.startsWith("/login")
+  ) {
+    if (session) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+
+    return res;
+  }
+
   if (req.nextUrl.pathname.startsWith("/")) {
     if (!session) {
       return NextResponse.redirect(new URL("/login", req.url));
@@ -31,5 +42,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/product/:path*", "/api/products/:path*", "/"],
+  matcher: ["/api/product/:path*", "/api/products/:path*", "/:path*"],
 };
