@@ -8,7 +8,9 @@ export type User = {
     id: string;
     email: string;
   };
-  session: {
-    user: User;
-  };
+  session: Session;
+};
+
+export type Session = {
+  user: User;
 };

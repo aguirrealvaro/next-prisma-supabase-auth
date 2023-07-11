@@ -6,15 +6,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { SignCredentialsType } from "@/client/interfaces";
 import { signUpUser } from "@/client/query-fns";
 
-type Fields = SignCredentialsType;
-
 export const Register: FunctionComponent = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Fields>({ defaultValues: { email: "", password: "" } });
+  } = useForm<SignCredentialsType>({ defaultValues: { email: "", password: "" } });
 
   const signUpMutation = useMutation(signUpUser, {
     onSuccess: () => {
