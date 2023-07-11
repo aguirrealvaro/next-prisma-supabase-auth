@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, FunctionComponent, ReactNode, useContext } from "react";
+import { createContext, FunctionComponent, ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getSession } from "@/client/query-fns";
 
@@ -12,7 +12,7 @@ type SessionContextValue = {
   isAuth: boolean;
 };
 
-const SessionContext = createContext<SessionContextValue>({} as SessionContextValue);
+export const SessionContext = createContext<SessionContextValue>({} as SessionContextValue);
 
 export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ children }) => {
   const sessionQuery = useQuery({
@@ -36,5 +36,3 @@ export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ child
     </SessionContext.Provider>
   );
 };
-
-export const useSession = () => useContext(SessionContext);
