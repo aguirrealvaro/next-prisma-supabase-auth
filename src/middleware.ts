@@ -4,21 +4,32 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+
   const supabase = createMiddlewareClient({ req, res });
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) {
-    return NextResponse.json("Not auth", { status: 400 });
+  if (req.nextUrl.pathname.startsWith("/api")) {
+    if (!session) {
+      return NextResponse.json("Not auth", { status: 400 });
+    }
+
+    res.cookies.set("userId", session.user.id);
+
+    return res;
   }
 
-  res.cookies.set("userId", session.user.id);
+  if (req.nextUrl.pathname.startsWith("/")) {
+    if (!session) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
 
-  return res;
+    return res;
+  }
 }
 
 export const config = {
-  matcher: ["/api/product/:path*", "/api/products/:path*"],
+  matcher: ["/api/product/:path*", "/api/products/:path*", "/"],
 };
