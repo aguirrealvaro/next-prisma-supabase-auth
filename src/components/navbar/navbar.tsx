@@ -3,13 +3,19 @@
 import { FunctionComponent } from "react";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { logOutSession } from "@/client/query-fns";
 import { useSession } from "@/hooks";
 
 const Navbar: FunctionComponent = () => {
+  const router = useRouter();
   const { isAuth } = useSession();
 
-  const signInMutation = useMutation(logOutSession);
+  const signInMutation = useMutation(logOutSession, {
+    onSuccess: () => {
+      router.push("/login");
+    },
+  });
 
   const handleLogout = () => {
     signInMutation.mutate();
