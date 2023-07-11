@@ -24,7 +24,9 @@ export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ child
     return <div>Loading!</div>;
   }
 
-  const isAuth = Boolean(sessionQuery.data);
+  const isAuth = Boolean(sessionQuery.data?.session);
+
+  console.log(sessionQuery.data);
 
   return (
     <SessionContext.Provider

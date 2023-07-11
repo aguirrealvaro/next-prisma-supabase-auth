@@ -12,5 +12,7 @@ export type User = {
 };
 
 export type Session = {
-  user: User;
+  session: {
+    user: User;
+  };
 };

@@ -1,11 +1,19 @@
 "use client";
 
 import { FunctionComponent } from "react";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { logOutSession } from "@/client/query-fns";
 import { useSession } from "@/hooks";
 
 const Navbar: FunctionComponent = () => {
   const { isAuth } = useSession();
+
+  const signInMutation = useMutation(logOutSession);
+
+  const handleLogout = () => {
+    signInMutation.mutate();
+  };
 
   const renderItems = () => {
     if (isAuth) {
@@ -16,7 +24,7 @@ const Navbar: FunctionComponent = () => {
               Home
             </Link>
           </li>
-          <button>log out</button>
+          <button onClick={handleLogout}>log out</button>
         </>
       );
     } else {

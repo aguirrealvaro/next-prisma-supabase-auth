@@ -18,3 +18,7 @@ export const signInUser = (body: SignCredentialsType): Promise<User> => {
 export const getSession = (): Promise<Session> => {
   return fetcher("auth/session");
 };
+
+export const logOutSession = (): Promise<string> => {
+  return fetcher("auth/logout", { method: "POST" });
+};
