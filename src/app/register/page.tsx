@@ -2,14 +2,11 @@
 
 import { FunctionComponent } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SignCredentialsType } from "@/client/interfaces";
 import { signUpUser } from "@/client/query-fns";
 
 export const Register: FunctionComponent = () => {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -20,7 +17,6 @@ export const Register: FunctionComponent = () => {
   const signUpMutation = useMutation(signUpUser, {
     onSuccess: () => {
       reset();
-      router.push("/login");
     },
   });
 
@@ -61,7 +57,7 @@ export const Register: FunctionComponent = () => {
           {signUpMutation.isLoading ? "Loading..." : "Sign up"}
         </button>
       </form>
-      {signUpMutation.isSuccess && <span>Email has been sent</span>}
+      {signUpMutation.isSuccess && <span className="text-green-500">Email has been sent</span>}
       {signUpMutation.isError && <span className="text-red-500">Error</span>}
     </div>
   );
