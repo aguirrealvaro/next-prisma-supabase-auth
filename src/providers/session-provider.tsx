@@ -21,7 +21,7 @@ export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ child
   });
 
   if (sessionQuery.isLoading) {
-    return <div>Loading!</div>;
+    return <div>Loading...</div>;
   }
 
   const isAuth = Boolean(sessionQuery.data?.session);

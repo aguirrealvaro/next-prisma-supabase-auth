@@ -1,13 +1,14 @@
 "use client";
 
 import { FunctionComponent } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SignCredentialsType } from "@/client/interfaces";
 import { signInUser } from "@/client/query-fns";
 
 export const Login: FunctionComponent = () => {
+  const queryClient = new QueryClient();
   const router = useRouter();
 
   const {
@@ -20,6 +21,7 @@ export const Login: FunctionComponent = () => {
   const signInMutation = useMutation(signInUser, {
     onSuccess: () => {
       reset();
+      queryClient.invalidateQueries(["user"]);
       router.push("/");
     },
   });
@@ -58,7 +60,7 @@ export const Login: FunctionComponent = () => {
           {errors.password && <span className="text-red-500">{errors.password.message}</span>}
         </div>
         <button type="submit" className="rounded bg-blue-600 p-2 text-white">
-          {signInMutation.isLoading ? "Loading..." : "Sign up"}
+          {signInMutation.isLoading ? "Loading..." : "Sign in"}
         </button>
       </form>
       {signInMutation.isError && <span className="text-red-500">Error</span>}
