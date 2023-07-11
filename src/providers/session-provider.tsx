@@ -26,15 +26,5 @@ export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ child
 
   const isAuth = Boolean(sessionQuery.data?.session);
 
-  console.log(sessionQuery.data);
-
-  return (
-    <SessionContext.Provider
-      value={{
-        isAuth,
-      }}
-    >
-      {children}
-    </SessionContext.Provider>
-  );
+  return <SessionContext.Provider value={{ isAuth }}>{children}</SessionContext.Provider>;
 };

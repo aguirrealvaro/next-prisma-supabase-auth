@@ -24,7 +24,9 @@ const Navbar: FunctionComponent = () => {
               Home
             </Link>
           </li>
-          <button onClick={handleLogout}>log out</button>
+          <button onClick={handleLogout} className="text-blue-600">
+            log out
+          </button>
         </>
       );
     } else {
