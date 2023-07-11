@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
@@ -11,7 +12,11 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (req.nextUrl.pathname.startsWith("/api")) {
+  if (
+    req.nextUrl.pathname.startsWith("/api") &&
+    !req.nextUrl.pathname.startsWith("/api/auth")
+  ) {
+    console.log("middleware for api routes exluding /auth");
     if (!session) {
       return NextResponse.json("Not auth", { status: 400 });
     }
@@ -21,26 +26,12 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  if (
-    req.nextUrl.pathname.startsWith("/register") ||
-    req.nextUrl.pathname.startsWith("/login")
-  ) {
+  if (["/register", "/login"].includes(req.nextUrl.pathname)) {
+    console.log("middleware for /register and /login pages");
     if (session) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
     return res;
   }
-
-  if (req.nextUrl.pathname.startsWith("/")) {
-    if (!session) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    return res;
-  }
 }
-
-export const config = {
-  matcher: ["/api/product/:path*", "/api/products/:path*", "/:path*"],
-};
