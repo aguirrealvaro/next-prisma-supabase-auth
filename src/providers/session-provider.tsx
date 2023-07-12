@@ -24,7 +24,12 @@ export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ child
     return <div>Loading...</div>;
   }
 
-  const isAuth = Boolean(sessionQuery.data?.session);
+  if (!sessionQuery.data) return null;
+
+  const email = sessionQuery.data.session?.user.email;
+  const isAuth = Boolean(sessionQuery.data.session);
+
+  console.log({ isAuth, email });
 
   return <SessionContext.Provider value={{ isAuth }}>{children}</SessionContext.Provider>;
 };
