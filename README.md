@@ -2,6 +2,6 @@
 
 Integrating prisma with supabase auth
 
-
 ### To do:
-- Add google log in
+
+- Add google log in: try base supabase client using `onAuthStateChange`
