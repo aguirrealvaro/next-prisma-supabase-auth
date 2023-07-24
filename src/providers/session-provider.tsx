@@ -10,6 +10,7 @@ type SessionProviderProps = {
 
 type SessionContextValue = {
   isAuth: boolean;
+  email: string | undefined;
 };
 
 export const SessionContext = createContext<SessionContextValue>({} as SessionContextValue);
@@ -31,5 +32,7 @@ export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ child
 
   console.log({ isAuth, email });
 
-  return <SessionContext.Provider value={{ isAuth }}>{children}</SessionContext.Provider>;
+  return (
+    <SessionContext.Provider value={{ isAuth, email }}>{children}</SessionContext.Provider>
+  );
 };

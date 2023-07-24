@@ -32,7 +32,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  // TO DO: add every page excepto /register and /login
+  // TO DO: add every page except /register and /login
   if (req.nextUrl.pathname === "/") {
     if (!session) {
       return NextResponse.redirect(new URL("/login", req.url));
