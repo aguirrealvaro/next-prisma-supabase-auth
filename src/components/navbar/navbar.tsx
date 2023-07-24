@@ -33,7 +33,7 @@ const Navbar: FunctionComponent = () => {
             </Link>
           </li>
           <button onClick={handleLogout} className="text-blue-600">
-            Log out
+            {logoutMutation.isLoading ? "Logging out..." : "Log out"}
           </button>
         </>
       );
