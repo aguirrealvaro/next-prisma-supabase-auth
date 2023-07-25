@@ -1,6 +1,7 @@
 "use client";
 
 import { FunctionComponent } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -28,6 +29,17 @@ export const Login: FunctionComponent = () => {
 
   const onSubmit: SubmitHandler<SignCredentialsType> = (data) => {
     signInMutation.mutate(data);
+  };
+
+  const supabase = createClientComponentClient();
+
+  const handleGoogleSignIn = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `http://localhost:3000/api/auth/callback`,
+      },
+    });
   };
 
   return (
@@ -64,6 +76,11 @@ export const Login: FunctionComponent = () => {
         </button>
       </form>
       {signInMutation.isError && <span className="text-red-500">Error</span>}
+      <div className="mt-12">
+        <button className="rounded bg-teal-500 p-4 text-black" onClick={handleGoogleSignIn}>
+          Google sign in
+        </button>
+      </div>
     </div>
   );
 };
