@@ -3,22 +3,18 @@ export type SignCredentialsType = {
   password: string;
 };
 
-type User = {
+export type User = {
   id: string;
-  role: string;
-  email: string;
+  role?: string;
+  email?: string;
 };
 
-type Session = {
+export type Session = {
   access_token: string;
   user: User;
 };
 
 export type LoginResponse = {
   user: User;
-  session?: Session;
-};
-
-export type SessionResponse = {
   session?: Session;
 };

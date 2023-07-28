@@ -2,14 +2,13 @@
 
 import { FunctionComponent } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SignCredentialsType } from "@/client/interfaces";
 import { signInUser } from "@/client/query-fns";
 
 export const Login: FunctionComponent = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   const {
@@ -22,7 +21,7 @@ export const Login: FunctionComponent = () => {
   const signInMutation = useMutation(signInUser, {
     onSuccess: () => {
       reset();
-      queryClient.invalidateQueries(["user"]);
+      router.refresh();
       router.push("/");
     },
   });

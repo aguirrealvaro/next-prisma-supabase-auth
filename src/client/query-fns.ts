@@ -1,5 +1,5 @@
 import { fetcher } from "./fetcher";
-import { SignCredentialsType, LoginResponse, SessionResponse } from "@/client/interfaces";
+import { SignCredentialsType, LoginResponse } from "@/client/interfaces";
 
 export const signUpUser = (body: SignCredentialsType): Promise<LoginResponse> => {
   return fetcher("auth/register", {
@@ -13,10 +13,6 @@ export const signInUser = (body: SignCredentialsType): Promise<LoginResponse> =>
     method: "POST",
     body: JSON.stringify(body),
   });
-};
-
-export const getSession = (): Promise<SessionResponse> => {
-  return fetcher("auth/session");
 };
 
 export const logOutSession = (): Promise<string> => {

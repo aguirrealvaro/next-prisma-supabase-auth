@@ -1,38 +1,31 @@
 "use client";
 
 import { createContext, FunctionComponent, ReactNode } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getSession } from "@/client/query-fns";
+import { Session, User } from "@/client/interfaces";
 
 type SessionProviderProps = {
   children: ReactNode;
+  session: Session | null;
 };
 
 type SessionContextValue = {
   isAuth: boolean;
-  email: string | undefined;
+  user: User | undefined;
 };
 
 export const SessionContext = createContext<SessionContextValue>({} as SessionContextValue);
 
-export const SessionProvider: FunctionComponent<SessionProviderProps> = ({ children }) => {
-  const sessionQuery = useQuery({
-    queryKey: ["user"],
-    queryFn: getSession,
-  });
+export const SessionProvider: FunctionComponent<SessionProviderProps> = ({
+  children,
+  session,
+}) => {
+  const isAuth = Boolean(session);
+  const user = session?.user;
 
-  if (sessionQuery.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!sessionQuery.data) return null;
-
-  const email = sessionQuery.data.session?.user.email;
-  const isAuth = Boolean(sessionQuery.data.session);
-
-  console.log({ isAuth, email });
+  // eslint-disable-next-line no-console
+  console.log({ isAuth, user });
 
   return (
-    <SessionContext.Provider value={{ isAuth, email }}>{children}</SessionContext.Provider>
+    <SessionContext.Provider value={{ isAuth, user }}>{children}</SessionContext.Provider>
   );
 };

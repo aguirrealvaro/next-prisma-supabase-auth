@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
-import { FunctionComponent, ReactNode } from "react";
+import { ReactNode } from "react";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Navbar, Wrapper } from "@/components";
 import { QueryProvider, SessionProvider } from "@/providers";
 import { cn } from "@/utils/cn";
@@ -14,7 +16,13 @@ type RootLayoutProps = {
   children: ReactNode;
 };
 
-const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
+const RootLayout = async ({ children }: RootLayoutProps) => {
+  const supabase = createServerComponentClient({ cookies });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -24,7 +32,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
         )}
       >
         <QueryProvider>
-          <SessionProvider>
+          <SessionProvider session={session}>
             <div className="flex h-screen flex-col">
               <Wrapper>
                 <Navbar />

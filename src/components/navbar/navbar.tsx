@@ -1,20 +1,19 @@
 "use client";
 
 import { FunctionComponent } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logOutSession } from "@/client/query-fns";
 import { useSession } from "@/hooks";
 
 const Navbar: FunctionComponent = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const { isAuth } = useSession();
 
   const logoutMutation = useMutation(logOutSession, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
+      router.refresh();
       router.push("/login");
     },
   });
